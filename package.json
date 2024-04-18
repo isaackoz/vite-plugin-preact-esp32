@@ -1,0 +1,45 @@
+{
+  "name": "vite-plugin-preact-esp32",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "description": "Convert Preact to a static header file to be used on an ESP32 for a front-end.",
+  "keywords": [
+    "preact",
+    "esp32",
+    "espressif",
+    "espidf",
+    "template",
+    "react"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch"
+  },
+  "author": "Isaac Koczwara",
+  "license": "MIT",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "peerDependencies": {
+    "vite": "2.x || 3.x || 4.x || 5.x"
+  },
+  "devDependencies": {
+    "@types/ejs": "^3.1.5",
+    "@types/mime-types": "^2.1.4",
+    "@types/node": "^20.12.7",
+    "ejs": "^3.1.10",
+    "mime-types": "^2.1.35",
+    "rollup": "^4.14.3",
+    "tsup": "^8.0.2",
+    "typescript": "^5.4.5"
+  }
+}
