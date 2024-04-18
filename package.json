@@ -30,15 +30,15 @@
     "dist"
   ],
   "peerDependencies": {
-    "vite": "2.x || 3.x || 4.x || 5.x"
+    "vite": "4.x"
   },
   "devDependencies": {
     "@types/ejs": "^3.1.5",
     "@types/mime-types": "^2.1.4",
     "@types/node": "^20.12.7",
     "ejs": "^3.1.10",
+    "rollup": "^3.0.0",
     "mime-types": "^2.1.35",
-    "rollup": "^4.14.3",
     "tsup": "^8.0.2",
     "typescript": "^5.4.5"
   }
