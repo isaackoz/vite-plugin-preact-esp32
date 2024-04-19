@@ -13,9 +13,102 @@ A vite plugin to compile websites to a static header file that can be used to se
      > \> Typescript (recommended)
    - >Use router?  
      >\> Optional (see below)
-3. `cd project-name`
-4. `npm i vite-plugin-esp32-web`
-5. Setup 
+2. `cd project-name`
+3. `npm i -D vite-plugin-esp32-web`
+4. Add the plugin to the vite config
+   ```ts
+    // vite.config.ts
+    import { defineConfig } from "vite";
+    import preact from "@preact/preset-vite";
+    import { espViteBuild } from "vite-plugin-preact-esp32";
+    
+    export default defineConfig({
+      plugins: [espViteBuild(), preact()],
+    });
+    ```
+5. `npm run build` or `npx vite build`
+6. Under `./dist/_esp32` you will have your output `static_files.h`. 
+
+### Using the router
+[CHORE: Finish this]
 
 ## Framework support
-This plugin was created specifically for Preact with Vite due to it's small dependency size (3kb) making it suitable for the ESP32 due to limited flash. However there is nothing specific to Preact meaaning this can be used for any static website. SSR is not supported! 
+This plugin was created specifically for Preact with Vite due to it's small dependency size (3kb) making it suitable for the ESP32 due to limited flash. However there is nothing specific to Preact meaaning this can potentially* be used for other frameworks powered by Vite. If it works with other frameworks, feel free to open a PR or fork it.
+
+# ESP32 Setup
+Once you have your `static_files.h`, it's up to you how you access it and serve it from your ESP32. There are examples in /esp32 for both Arduino and PlatformIO. 
+
+## Arduino
+This is the general setup for the WebServer library by Ivan Grokohotkov. This can be used with any library, but the setup may vary. The general idea will be the same though.
+
+You will notice at the bottom of the `static_files.h` there is something that looks like the following:  
+```c++
+  const file files[] PROGMEM = {
+      {.path = "/assets/preact-48177e6f.svg",
+          .size = f_assets_preact_48177e6f_svg_size,
+          .type = "image/svg+xml",
+          .contents = f_assets_preact_48177e6f_svg_contents},
+    
+      {.path = "/assets/index-f615e9a0.css",
+          .size = f_assets_index_f615e9a0_css_size,
+          .type = "text/css",
+          .contents = f_assets_index_f615e9a0_css_contents},
+    
+      {.path = "/assets/index-a196fdf4.js",
+          .size = f_assets_index_a196fdf4_js_size,
+          .type = "application/javascript",
+          .contents = f_assets_index_a196fdf4_js_contents},
+    
+      {.path = "/index.html",
+          .size = f_index_html_size,
+          .type = "text/html",
+          .contents = f_index_html_contents}
+  };
+```
+
+This is the array of files that were compiled. On your webserver, you should loop over these and create a route for each one. This 
+```c++
+#include "static_files.h"
+// setup()...
+for (int i = 0; i < static_files::num_of_files; i++)
+  {
+    server.on(static_files::files[i].path, [i]
+              {
+      server.sendHeader("Content-Encoding", "gzip");
+      server.send_P(200, static_files::files[i].type, (const char *)static_files::files[i].contents, static_files::files[i].size); });
+  }
+```
+So now `example.com/index.html` will serve the `.contents = f_index_html_contents` from above.  
+
+You will also probably want to manually add the `index.html` as the default entry point so that you access the index when you navigate to `example.com/`
+```c++
+  server.on("/", []{
+    server.sendHeader("Content-Encoding", "gzip");
+    server.send_P(200, "text/html", (const char *)static_files::f_index_html_contents, static_files::f_index_html_size);
+  });
+```
+
+## PlatformIO
+
+Make sure you include `#include <pgmspace.h>` alongside the `#include "static_files.h"` to ensure it compiles. This is due to the `PROGMEM` in the `static_files.h`. In the future there will be a config and separate templates, but for now this will do. Alternatively just remove `PROGMEM` from the file.  
+Other than that, follow similar directions as above or refer to the example under /esp32/platformio
+
+# Other
+
+### How much memory does this take up? What are the advantages of using Preact?
+Preact has a depencency size of 3kb making it an ideal front-end framework. Preact has a near identical API to Reac, making it easy to create reusable components and a single-page-application (SPA).  
+
+The default template you get when you run `npm init preact` compiles down to 9.48kb!
+```
+dist/index.html                   0.48 kB │ gzip: 0.32 kB
+dist/assets/preact-48177e6f.svg   1.59 kB │ gzip: 0.77 kB
+dist/assets/index-f615e9a0.css    1.42 kB │ gzip: 0.66 kB
+dist/assets/index-a196fdf4.js    19.02 kB │ gzip: 7.73 kB
+```
+Do not worry about the `static_files.h` filesize, as it will be roughly 5x larger (58 KB for the default template) due to formatting. Your C++ compiler will minimize it back down when you flash your ESP32.  
+
+More complex applications will be around 100-500kB in size. Considering an ESP32-S3 has 8mB of flash, that's only 1-6% of the total flash storage.
+
+## Ackknowledgements
+This was inspired from [https://github.com/mruettgers/preact-template-esp](https://github.com/mruettgers/preact-template-esp) which is no longer maintained and uses an outdated version of Preact.
+
