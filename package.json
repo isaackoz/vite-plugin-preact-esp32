@@ -1,10 +1,10 @@
 {
-  "name": "vite-plugin-preact-esp32",
+  "name": "vite-plugin-esp-web",
   "version": "1.0.0",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
-  "description": "Convert Preact to a static header file to be used on an ESP32 for a front-end.",
+  "description": "Convert vite powered static websites to a header file to be used on an ESP32 webserver.",
   "keywords": [
     "preact",
     "esp32",

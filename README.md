@@ -20,7 +20,7 @@ A vite plugin to compile websites to a static header file that can be used to se
     // vite.config.ts
     import { defineConfig } from "vite";
     import preact from "@preact/preset-vite";
-    import { espViteBuild } from "vite-plugin-preact-esp32";
+    import { espViteBuild } from "vite-plugin-esp-web";
     
     export default defineConfig({
       plugins: [espViteBuild(), preact()],
@@ -31,9 +31,6 @@ A vite plugin to compile websites to a static header file that can be used to se
 
 ### Using the router
 [CHORE: Finish this]
-
-## Framework support
-This plugin was created specifically for Preact with Vite due to it's small dependency size (3kb) making it suitable for the ESP32 due to limited flash. However there is nothing specific to Preact meaaning this can potentially* be used for other frameworks powered by Vite. If it works with other frameworks, feel free to open a PR or fork it.
 
 # ESP32 Setup
 Once you have your `static_files.h`, it's up to you how you access it and serve it from your ESP32. There are examples in /esp32 for both Arduino and PlatformIO. 
@@ -109,6 +106,12 @@ Do not worry about the `static_files.h` filesize, as it will be roughly 5x large
 
 More complex applications will be around 100-500kB in size. Considering an ESP32-S3 has 8mB of flash, that's only 1-6% of the total flash storage.
 
-## Ackknowledgements
+### Can I use this for [insert microchip here]?
+Yes. The idea is the same: Convert a static website into a single header file and serve the corresponding file in a webserver. 
+
+### Will this also work for [insert framework here]
+Probably. Again, this isn't doing anything out of the ordinary. It is simply converting a static website to a header file. This is just a plugin specifically for Vite. As long as the framework is able to export a static website (ssg, static exports, etc.) and is powered by Vite, it _should_ work. Personally I prefer Preact due to it's small dependency and simplicity, making it ideal for the ESP32. Feel free to submit a PR with a working example if it works for other frameworks!
+
+## Acknowledgements
 This was inspired from [https://github.com/mruettgers/preact-template-esp](https://github.com/mruettgers/preact-template-esp) which is no longer maintained and uses an outdated version of Preact.
 
