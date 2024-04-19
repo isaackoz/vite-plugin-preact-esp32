@@ -20,7 +20,7 @@ A vite plugin to compile websites to a static header file that can be used to se
     // vite.config.ts
     import { defineConfig } from "vite";
     import preact from "@preact/preset-vite";
-    import { espViteBuild } from "vite-plugin-esp-web";
+    import { espViteBuild } from "vite-plugin-esp32-web";
     
     export default defineConfig({
       plugins: [espViteBuild(), preact()],

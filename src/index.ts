@@ -85,7 +85,7 @@ export function espViteBuild(): Plugin {
   }
 
   return {
-    name: "vite-plugin-esp-web",
+    name: "vite-plugin-esp32-web",
     enforce: "pre",
     apply: "build",
     writeBundle(options, bundle) {

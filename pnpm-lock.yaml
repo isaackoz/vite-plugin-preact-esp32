@@ -64,7 +64,7 @@ importers:
       vite:
         specifier: ^4.3.2
         version: 4.5.3(@types/node@20.12.7)
-      vite-plugin-esp-web:
+      vite-plugin-esp32-web:
         specifier: workspace:*
         version: link:..
 

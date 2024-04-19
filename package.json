@@ -1,6 +1,7 @@
 {
-  "name": "vite-plugin-esp-web",
+  "name": "vite-plugin-esp32-web",
   "version": "0.1.0",
+  "git-repository": "https://github.com/isaackoz/vite-plugin-esp32-web",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
