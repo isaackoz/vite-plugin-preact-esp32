@@ -30,7 +30,9 @@ A vite plugin to compile websites to a static header file that can be used to se
 6. Under `./dist/_esp32` you will have your output `static_files.h`. 
 
 ### Using the router
-[CHORE: Finish this]
+Whether or not you use the router is optional. If you want more than one page, you very likely want to use it. It only adds a few extra kB's, so there isn't really a reason _not_ to use it unless you just have a single page.  
+  
+
 
 # ESP32 Setup
 Once you have your `static_files.h`, it's up to you how you access it and serve it from your ESP32. There are examples in /esp32 for both Arduino and PlatformIO. 
