@@ -31,7 +31,8 @@ A vite plugin to compile websites to a static header file that can be used to se
 
 ### Using the router
 Whether or not you use the router is optional. If you want more than one page, you very likely want to use it. It only adds a few extra kB's, so there isn't really a reason _not_ to use it unless you just have a single page.  
-  
+
+:warning: If you use this with an SPA (Preact for example), you will lose context if you refresh the page. I.e. if you navigate to `example.com/test` from a link within the Router, all is well. However, if you navigate directly to `example.com/test` or refresh the page, you will be served a 404 from the webserver (not from the SPA). [Check here](https://stackoverflow.com/a/43557288/10422604) for a better explanation. I will update this when I find a solution.
 
 
 # ESP32 Setup
