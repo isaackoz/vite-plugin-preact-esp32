@@ -1,5 +1,5 @@
 # vite-plugin-preact-esp32
-A vite plugin to compile websites to a static header file that can be used to serve a SPA from an ESP32. All this plugin does is takes the output from the build process and converts all static files (html, css, js, media, etc.) into a single `static_files.h` that can be used on an ESP32.
+A vite plugin to compiles a Preact SPA to a static header file that can be used to serve a SPA from an ESP32. All this plugin does is takes the output from the build process and converts all static files (html, css, js, media, etc.) into a single `static_files.h` that can be used on an ESP32.
 
 
 
@@ -33,11 +33,11 @@ A vite plugin to compile websites to a static header file that can be used to se
 ### Using the router
 Whether or not you use the router is optional. If you want more than one page, you very likely want to use it. It only adds a few extra kB's, so there isn't really a reason _not_ to use it unless you just have a single page.  
 
-:warning: If you use this with an SPA (Preact for example), you will lose context if you refresh the page. I.e. if you navigate to `example.com/test` from a link within the Router, all is well. However, if you navigate directly to `example.com/test` or refresh the page, you will be served a 404 from the webserver (not from the SPA). [Check here](https://stackoverflow.com/a/43557288/10422604) for a better explanation. I will update this when I find a solution.
+:warning: Since Preact is a SPA, you will lose context if you refresh the page. I.e. if you navigate to `example.com/test` from a link within the Router, all is well. However, if you navigate directly to `example.com/test` or refresh the page, you will be served a 404 from the webserver (not from the SPA). [Check here](https://stackoverflow.com/a/43557288/10422604) for a better explanation. I will update this when I find a solution.
 
 
 # ESP32 Setup
-Once you have your `static_files.h`, it's up to you how you access it and serve it from your ESP32. There are examples in /esp32 for both Arduino and PlatformIO. 
+Once you have your `static_files.h`, it's up to you how you access it and serve it from your ESP32. There are examples in /esp32 for both Arduino and PlatformIO (coming soon).
 
 ## Arduino
 This is the general setup for the WebServer library by Ivan Grokohotkov. This can be used with any library, but the setup may vary. The general idea will be the same though.
@@ -92,7 +92,7 @@ You will also probably want to manually add the `index.html` as the default entr
 ## PlatformIO
 
 Make sure you include `#include <pgmspace.h>` alongside the `#include "static_files.h"` to ensure it compiles. This is due to the `PROGMEM` in the `static_files.h`. In the future there will be a config and separate templates, but for now this will do. Alternatively just remove `PROGMEM` from the file.  
-Other than that, follow similar directions as above or refer to the example under /esp32/platformio
+Other than that, follow similar directions as above or refer to the example under /esp32/platformio (WIP)
 
 # Other
 
@@ -117,7 +117,7 @@ No! Good luck getting Node to run on an ESP32. This will only work with client-s
 Yes. The idea is the same: Convert a static website into a single header file and serve the corresponding file in a webserver. 
 
 ### Will this also work for [insert framework here]
-Probably. Again, this isn't doing anything out of the ordinary. It is simply converting a static website to a header file. This is just a plugin specifically for Vite. As long as the framework is able to export a static website and is powered by Vite, it _should_ work. Personally I prefer Preact due to it's small dependency and simplicity, making it ideal for the ESP32. Feel free to submit a PR with a working example if it works for other frameworks!
+Maybe. It depends on how the framework handles the build process. This is specifically designed for Preact. It doesn't work with Astro due to how they handle the build process.
 
 ## Acknowledgements
 This was inspired from [https://github.com/mruettgers/preact-template-esp](https://github.com/mruettgers/preact-template-esp) which is no longer maintained and uses an outdated version of Preact.
