@@ -1,8 +1,14 @@
 // vite.config.ts
 import { defineConfig } from "vite";
 import preact from "@preact/preset-vite";
-import { espViteBuild } from "vite-plugin-esp32-web";
+import { espViteBuild } from "vite-plugin-preact-esp32";
 
 export default defineConfig({
-  plugins: [espViteBuild(), preact()],
+  plugins: [
+    espViteBuild({
+      enforce: "pre",
+      logging: true,
+    }),
+    preact(),
+  ],
 });

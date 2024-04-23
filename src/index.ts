@@ -14,7 +14,20 @@ interface Asset {
   size: number;
 }
 
-export function espViteBuild(): Plugin {
+/**
+ * @param logging Whether or not to enable console output during build. Defaults to false
+ * @param enforce Enforce plugin invocation tier similar to webpack loaders.
+ */
+export interface PluginConfig {
+  logging?: boolean;
+  enforce?: Plugin["enforce"];
+}
+
+export function espViteBuild(
+  configParams: PluginConfig = {
+    logging: false,
+  }
+): Plugin {
   let assets: Asset[] = [];
 
   function addAsset(
@@ -85,8 +98,8 @@ export function espViteBuild(): Plugin {
   }
 
   return {
-    name: "vite-plugin-esp32-web",
-    enforce: "pre",
+    name: "vite-plugin-preact-esp32",
+    enforce: configParams.enforce,
     apply: "build",
     writeBundle(options, bundle) {
       for (const [filename, data] of Object.entries(bundle)) {

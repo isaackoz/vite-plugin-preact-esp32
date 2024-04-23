@@ -1,4 +1,4 @@
-# vite-plugin-esp32-web
+# vite-plugin-preact-esp32
 A vite plugin to compile websites to a static header file that can be used to serve a SPA from an ESP32. All this plugin does is takes the output from the build process and converts all static files (html, css, js, media, etc.) into a single `static_files.h` that can be used on an ESP32.
 
 
@@ -14,13 +14,13 @@ A vite plugin to compile websites to a static header file that can be used to se
    - >Use router?  
      >\> Optional (see below)
 2. `cd project-name`
-3. `npm i -D vite-plugin-esp32-web`
+3. `npm i -D vite-plugin-preact-esp32`
 4. Add the plugin to the vite config
    ```ts
     // vite.config.ts
     import { defineConfig } from "vite";
     import preact from "@preact/preset-vite";
-    import { espViteBuild } from "vite-plugin-esp32-web";
+    import { espViteBuild } from "vite-plugin-preact-esp32";
     
     export default defineConfig({
       plugins: [espViteBuild(), preact()],
