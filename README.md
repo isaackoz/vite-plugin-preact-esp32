@@ -14,20 +14,21 @@ A vite plugin to compile websites to a static header file that can be used to se
    - >Use router?  
      >\> Optional (see below)
 2. `cd project-name`
-3. `npm i -D vite-plugin-preact-esp32`
-4. Add the plugin to the vite config
+3. `npm i -D @ikoz/vite-plugin-preact-esp32
+4. `
+5. Add the plugin to the vite config
    ```ts
     // vite.config.ts
     import { defineConfig } from "vite";
     import preact from "@preact/preset-vite";
-    import { espViteBuild } from "vite-plugin-preact-esp32";
+    import { espViteBuild } from "@ikoz/vite-plugin-preact-esp32";
     
     export default defineConfig({
       plugins: [espViteBuild(), preact()],
     });
     ```
-5. `npm run build` or `npx vite build`
-6. Under `./dist/_esp32` you will have your output `static_files.h`. 
+6. `npm run build` or `npx vite build`
+7. Under `./dist/_esp32` you will have your output `static_files.h`. 
 
 ### Using the router
 Whether or not you use the router is optional. If you want more than one page, you very likely want to use it. It only adds a few extra kB's, so there isn't really a reason _not_ to use it unless you just have a single page.  
