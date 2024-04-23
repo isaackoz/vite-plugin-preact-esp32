@@ -1,5 +1,5 @@
 {
-  "name": "vite-plugin-preact-esp32",
+  "name": "@ikoz/vite-plugin-preact-esp32",
   "version": "0.1.0",
   "git-repository": "https://github.com/isaackoz/vite-plugin-preact-esp32",
   "main": "dist/index.js",
